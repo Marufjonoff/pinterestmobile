@@ -1,9 +1,12 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:pinterestmobile/core/app_colors.dart';
+import 'package:pinterestmobile/models/utils.dart';
 import 'package:pinterestmobile/pages/auth/sign_up_page.dart';
 import 'package:pinterestmobile/pages/main/header_page.dart';
 import 'package:pinterestmobile/pages/views/validate_textField.dart';
+import 'package:pinterestmobile/services/auth_service.dart';
+import 'package:pinterestmobile/services/pref_service.dart';
 import 'package:pinterestmobile/widgets/glassmorphism_widget.dart';
 
 class SignInPage extends StatefulWidget {
@@ -29,18 +32,18 @@ class _SignInPageState extends State<SignInPage> with InputValidation {
     String email = emailController.text.trim().toString();
     String password = passwordController.text.trim().toString();
 
-    // if(email.isEmpty || password.isEmpty) {
-    //   Utils.showToast(context, "Please complete all the fields");
-    //   return;
-    // }
+    if(email.isEmpty || password.isEmpty) {
+      Utils.showToast(context, "Please complete all the fields");
+      return;
+    }
 
     setState(() {
       isLoading = true;
     });
 
-    // await AuthService.signInUser(email, password).then((response) {
-    //   _getFirebaseUser(response);
-    // });
+    await AuthService.signInUser(email, password).then((response) {
+      _getFirebaseUser(response);
+    });
   }
 
   void _getFirebaseUser(Map<String, User?> map) async {
@@ -48,18 +51,19 @@ class _SignInPageState extends State<SignInPage> with InputValidation {
       isLoading = false;
     });
 
-    // if(!map.containsKey("SUCCESS")) {
-    //   if(map.containsKey("user-not-found")) Utils.showToast(context, "No user found for that email.");
-    //   if(map.containsKey("wrong-password")) Utils.showToast(context, "Wrong password provided for that user.");
-    //   if(map.containsKey("ERROR")) Utils.showToast(context, "Check Your Information.");
-    //   return;
-    // }
+    if(!map.containsKey("SUCCESS")) {
+      if(map.containsKey("user-not-found")) Utils.showToast(context, "No user found for that email.");
+      if(map.containsKey("wrong-password")) Utils.showToast(context, "Wrong password provided for that user.");
+      if(map.containsKey("ERROR")) Utils.showToast(context, "Check Your Information.");
+      return;
+    }
 
     User? user = map["SUCCESS"];
     if(user == null) return;
 
-    // await Prefs.store(StorageKeys.UID, user.uid);
-    // Navigator.pushReplacementNamed(context, HeaderPage.id);
+    await Prefs.store(StorageKeys.UID, user.uid).then((value) {
+      Navigator.pushNamedAndRemoveUntil(context, HeaderPage.id, (route) => false);
+    });
   }
 
   @override

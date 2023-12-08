@@ -1,8 +1,14 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:pinterestmobile/core/app_colors.dart';
+import 'package:pinterestmobile/models/user_model.dart';
+import 'package:pinterestmobile/models/utils.dart';
 import 'package:pinterestmobile/pages/auth/sign_in_page.dart';
 import 'package:pinterestmobile/pages/main/header_page.dart';
 import 'package:pinterestmobile/pages/views/validate_textField.dart';
+import 'package:pinterestmobile/services/auth_service.dart';
+import 'package:pinterestmobile/services/data_service.dart';
+import 'package:pinterestmobile/services/pref_service.dart';
 import 'package:pinterestmobile/widgets/glassmorphism_widget.dart';
 
 class SignUpPage extends StatefulWidget {
@@ -29,7 +35,7 @@ class _SignUpPageState extends State<SignUpPage> with InputValidation {
     String password = passwordController.text.trim().toString();
 
     if((email.isEmpty || password.isEmpty || fullName.isEmpty || confirmPassword.isEmpty) && password == confirmPassword) {
-      // Utils.showToast(context, "Please complete all the fields");
+      Utils.showToast(context, "Please complete all the fields");
       return;
     }
 
@@ -37,32 +43,34 @@ class _SignUpPageState extends State<SignUpPage> with InputValidation {
       isLoading = true;
     });
 
-    // var modelUser = Users(fullName: fullName, email: email, password: password);
-    // await AuthService.signUpUser(modelUser).then((response) {
-    //   _getFirebaseUser(response, modelUser);
-    // });
+    var modelUser = Users(fullName: fullName, email: email, password: password);
+    await AuthService.signUpUser(modelUser).then((response) {
+      _getFirebaseUser(response, modelUser);
+    });
   }
 
-  // void _getFirebaseUser(Map<String, User?> map, Users users) async {
-  //   setState(() {
-  //     isLoading = false;
-  //   });
-  //
-  //   if(!map.containsKey("SUCCESS")) {
-  //     if(map.containsKey("weak-password")) Utils.showToast(context, "The password provided is too weak.");
-  //     if(map.containsKey("email-already-in-use")) Utils.showToast(context, "The account already exists for that email.");
-  //     if(map.containsKey("ERROR")) Utils.showToast(context, "Check Your Information");
-  //     return;
-  //   }
-  //
-  //   User? user = map["SUCCESS"];
-  //   if(user == null) return;
-  //
-  //   await Prefs.store(StorageKeys.UID, user.uid);
-  //   users.uid = user.uid;
-  //
-  //   DataService.storeUser(users).then((value) => {Navigator.pushReplacementNamed(context, SignInPage.id)});
-  // }
+  void _getFirebaseUser(Map<String, User?> map, Users users) async {
+    setState(() {
+      isLoading = false;
+    });
+
+    if(!map.containsKey("SUCCESS")) {
+      if(map.containsKey("weak-password")) Utils.showToast(context, "The password provided is too weak.");
+      if(map.containsKey("email-already-in-use")) Utils.showToast(context, "The account already exists for that email.");
+      if(map.containsKey("ERROR")) Utils.showToast(context, "Check Your Information");
+      return;
+    }
+
+    User? user = map["SUCCESS"];
+    if(user == null) return;
+
+    await Prefs.store(StorageKeys.UID, user.uid);
+    users.uid = user.uid;
+
+    await DataService.storeUser(users).then((value) {
+      Navigator.pushNamedAndRemoveUntil(context, SignInPage.id, (route) => false);
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
