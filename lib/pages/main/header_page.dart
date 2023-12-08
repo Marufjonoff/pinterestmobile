@@ -4,7 +4,7 @@ import 'package:pinterestmobile/core/app_colors.dart';
 import 'package:pinterestmobile/core/app_text_style.dart';
 import 'package:pinterestmobile/pages/main/account_page.dart';
 import 'package:pinterestmobile/pages/main/comment_page.dart';
-import 'package:pinterestmobile/pages/home/home_page.dart';
+import 'package:pinterestmobile/pages/main/home_page.dart';
 import 'package:pinterestmobile/pages/main/search_page.dart';
 import 'package:pinterestmobile/view_models/header_view_model.dart';
 import 'package:pinterestmobile/widgets/custom_pictures.dart';

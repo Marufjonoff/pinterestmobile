@@ -29,5 +29,4 @@ class HeaderViewModel extends ChangeNotifier {
     pageController.jumpToPage(index);
   }
 
-
 }

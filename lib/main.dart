@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:pinterestmobile/di.dart';
 import 'package:pinterestmobile/pages/main/account_page.dart';
-import 'package:pinterestmobile/pages/home/home_page.dart';
+import 'package:pinterestmobile/pages/main/home_page.dart';
 import 'package:pinterestmobile/pages/main/header_page.dart';
 import 'package:pinterestmobile/pages/main/search_page.dart';
 import 'package:pinterestmobile/pages/splash/splash_page.dart';
