@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:pinterestmobile/models/pinterest_model.dart';
-import 'package:pinterestmobile/pages/search_photo_page.dart';
+import 'package:pinterestmobile/pages/search/search_photo_page.dart';
 import 'package:pinterestmobile/services/http_service.dart';
 import 'package:pinterestmobile/services/log_service.dart';
 

@@ -4,7 +4,7 @@ import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:lottie/lottie.dart';
 import 'package:pinterestmobile/models/utils.dart';
-import 'package:pinterestmobile/pages/detail_page.dart';
+import 'package:pinterestmobile/pages/detail/detail_page.dart';
 import 'package:pinterestmobile/services/log_service.dart';
 import 'package:pinterestmobile/view_models/home_view_model.dart';
 import 'package:provider/provider.dart';

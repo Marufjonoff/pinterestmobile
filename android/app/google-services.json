@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "741937452708",
+    "project_id": "pinterestmobile-2fa98",
+    "storage_bucket": "pinterestmobile-2fa98.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:741937452708:android:e1584bfe5307f6eda3b831",
+        "android_client_info": {
+          "package_name": "uz.obidjon.pinterestmobile"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyD30xzdyD9yI5YHZrHFyG8ff_N1TbQYH04"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

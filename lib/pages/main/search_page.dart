@@ -6,7 +6,7 @@ import 'package:pinterestmobile/models/utils.dart';
 import 'package:pinterestmobile/view_models/search_view_model.dart';
 import 'package:provider/provider.dart';
 
-import 'detail_page.dart';
+import '../detail/detail_page.dart';
 
 class SearchPage extends StatefulWidget {
   const SearchPage({Key? key}) : super(key: key);
