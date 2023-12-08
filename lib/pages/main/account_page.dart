@@ -24,6 +24,7 @@ class _AccountPageState extends State<AccountPage> {
     // TODO: implement initState
     super.initState();
     viewModel.loadUsers();
+    viewModel.initAppDatabase();
   }
 
   @override
