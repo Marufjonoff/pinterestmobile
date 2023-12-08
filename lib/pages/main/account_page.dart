@@ -1,8 +1,9 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:pinterestmobile/core/app_colors.dart';
+import 'package:pinterestmobile/core/app_text_style.dart';
 import 'package:pinterestmobile/dialogs/alert_dialogs.dart';
 import 'package:pinterestmobile/services/auth_service.dart';
 import 'package:pinterestmobile/view_models/account_view_model.dart';
@@ -23,7 +24,6 @@ class _AccountPageState extends State<AccountPage> {
   void initState() {
     // TODO: implement initState
     super.initState();
-    viewModel.loadUsers();
     viewModel.initAppDatabase();
   }
 
@@ -177,7 +177,8 @@ class _AccountPageState extends State<AccountPage> {
                 const SizedBox(
                   height: 10,
                 ),
-                Padding(
+                if(viewModel.images.isEmpty) Center(child: Text("No data", style: AppTextStyle.style700)),
+                if(viewModel.images.isNotEmpty) Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 7),
                   child: SizedBox(
                     height: MediaQuery.of(context).size.height,
@@ -190,35 +191,39 @@ class _AccountPageState extends State<AccountPage> {
                         ),
                         crossAxisSpacing: 10,
                         mainAxisSpacing: 10,
-                        itemCount: viewModel.defaultImage.length,
+                        itemCount: viewModel.images.length,
                         itemBuilder: (context, index){
-                          return Column(
-                            mainAxisAlignment: MainAxisAlignment.end,
-                            crossAxisAlignment: CrossAxisAlignment.end,
+                          return Stack(
                             children: [
-                              ClipRRect(
-                                borderRadius: BorderRadius.circular(15.0),
-                                child: Image(
-                                  image: NetworkImage(viewModel.defaultImage[index]),
-                                ),
-                              ),
-                              const SizedBox(
-                                height: 5,
-                              ),
                               SizedBox(
-                                width: MediaQuery.of(context).size.width/2,
-                                height: 20,
-                                child: Padding(
-                                  padding: const EdgeInsets.only(right: 10),
-                                  child: Align(
-                                    alignment: Alignment.centerRight,
-                                    child: GestureDetector(
-                                      onTap: (){},
-                                      child: const Icon(FontAwesomeIcons.ellipsisH, color: Colors.black, size: 17,),
-                                    ),
-                                  ),
+                                width: MediaQuery.of(context).size.width / 2,
+                                child: ClipRRect(
+                                    borderRadius: BorderRadius.circular(15.0),
+                                    child: CachedNetworkImage(
+                                      imageUrl: viewModel.images[index].imageUrl,
+                                      placeholder: (context, widget) => AspectRatio(
+                                        aspectRatio: viewModel.images[index].width/viewModel.images[index].height,
+                                        child: Container(
+                                          decoration: BoxDecoration(
+                                            borderRadius: BorderRadius.circular(15.0),
+                                            color: Colors.purple,
+                                          ),
+                                        ),
+                                      ),
+                                    )
                                 ),
                               ),
+                              Positioned(
+                                top: 0,
+                                right: 0,
+                                child: IconButton(
+                                  icon: const Icon(Icons.delete, color: AppColors.red),
+                                  onPressed: () async {
+                                    await viewModel.deleteImage(viewModel.images[index].id);
+                                  },
+                                  splashRadius: 25,
+                                ),
+                              )
                             ],
                           );
                         }

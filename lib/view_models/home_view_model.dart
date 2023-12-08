@@ -7,6 +7,8 @@ import 'package:permission_handler/permission_handler.dart';
 import 'package:pinterestmobile/models/pinterest_model.dart';
 import 'package:pinterestmobile/services/http_service.dart';
 import 'package:pinterestmobile/services/log_service.dart';
+import 'package:pinterestmobile/sql/app_database.dart';
+import 'package:pinterestmobile/sql/entity/images_list_entity.dart';
 
 class HomeViewModel extends ChangeNotifier {
   late TabController tabController;
@@ -16,6 +18,29 @@ class HomeViewModel extends ChangeNotifier {
   bool isLoading = true;
   bool isLoadMore = false;
   bool isDownload = false;
+  bool isSave = false;
+
+  late final AppDatabase appDatabase;
+
+  void setAppDatabase(AppDatabase value) {
+    appDatabase = value;
+    notifyListeners();
+  }
+
+  Future<void> initAppDatabase() async {
+    debugPrint("\nhhhhhhhh\n");
+    await $FloorAppDatabase.databaseBuilder("app_database.db").build().then((value) async {
+      setAppDatabase(value);
+    });
+  }
+
+  Future<void> saveImages(ImagesListEntity entity) async {
+    isSave = true;
+    notifyListeners();
+    await appDatabase.imagesList.insertImagesList(entity);
+    isSave = false;
+    notifyListeners();
+  }
 
   void _showResponse(String response) {
     List<Post> list = HttpService.parseResponse(response);

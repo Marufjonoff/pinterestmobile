@@ -25,6 +25,7 @@ class AccountViewModel extends ChangeNotifier {
     await $FloorAppDatabase.databaseBuilder("app_database.db").build().then((value) async {
       setAppDatabase(value);
     });
+    await loadUsers();
   }
 
   Future<void> loadUsers() async {

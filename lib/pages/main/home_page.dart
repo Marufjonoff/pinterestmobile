@@ -3,9 +3,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:lottie/lottie.dart';
+import 'package:pinterestmobile/core/app_colors.dart';
 import 'package:pinterestmobile/models/utils.dart';
 import 'package:pinterestmobile/pages/detail/detail_page.dart';
 import 'package:pinterestmobile/services/log_service.dart';
+import 'package:pinterestmobile/sql/entity/images_list_entity.dart';
 import 'package:pinterestmobile/view_models/home_view_model.dart';
 import 'package:provider/provider.dart';
 
@@ -21,6 +23,7 @@ class HomePage extends StatefulWidget {
 class _HomePageState extends State<HomePage> with SingleTickerProviderStateMixin {
   HomeViewModel viewModel = HomeViewModel();
 
+
   @override
   void dispose() {
     // TODO: implement dispose
@@ -33,11 +36,13 @@ class _HomePageState extends State<HomePage> with SingleTickerProviderStateMixin
   void initState() {
     // TODO: implement initState
     super.initState();
+    viewModel.initAppDatabase();
     viewModel.apiGet();
     viewModel.tabController = TabController(length: 1, vsync: this);
     viewModel.tabController.animateTo(0);
     viewModel.scrollPosition();
   }
+
   dynamic snackBar;
 
   void showSnackBar(){
@@ -145,23 +150,46 @@ class _HomePageState extends State<HomePage> with SingleTickerProviderStateMixin
                                     },
                                     child: Column(
                                       children: [
-                                        SizedBox(
-                                          width: MediaQuery.of(context).size.width / 2,
-                                          child: ClipRRect(
-                                              borderRadius: BorderRadius.circular(15.0),
-                                              child: CachedNetworkImage(
-                                                imageUrl: viewModel.note[index].urls!.small!,
-                                                placeholder: (context, widget) => AspectRatio(
-                                                  aspectRatio: viewModel.note[index].width!/viewModel.note[index].height!,
-                                                  child: Container(
-                                                    decoration: BoxDecoration(
-                                                      borderRadius: BorderRadius.circular(15.0),
-                                                      color: UtilsColors(value: viewModel.note[index].color!).toColor(),
+                                        Stack(
+                                          children: [
+                                            SizedBox(
+                                              width: MediaQuery.of(context).size.width / 2,
+                                              child: ClipRRect(
+                                                  borderRadius: BorderRadius.circular(15.0),
+                                                  child: CachedNetworkImage(
+                                                    imageUrl: viewModel.note[index].urls!.small!,
+                                                    placeholder: (context, widget) => AspectRatio(
+                                                      aspectRatio: viewModel.note[index].width!/viewModel.note[index].height!,
+                                                      child: Container(
+                                                        decoration: BoxDecoration(
+                                                          borderRadius: BorderRadius.circular(15.0),
+                                                          color: UtilsColors(value: viewModel.note[index].color!).toColor(),
+                                                        ),
+                                                      ),
                                                     ),
-                                                  ),
-                                                ),
-                                              )
-                                          ),
+                                                  )
+                                              ),
+                                            ),
+                                            Positioned(
+                                              top: 0,
+                                              right: 0,
+                                              child: IconButton(
+                                                icon: const Icon(Icons.save, color: AppColors.red),
+                                                onPressed: () async {
+                                                  await viewModel.saveImages(ImagesListEntity(
+                                                      id: DateTime.now().toString(),
+                                                      imageUrl: viewModel.note[index].urls!.small ?? "",
+                                                      isSelected: true,
+                                                    width: viewModel.note[index].width ?? 0,
+                                                    height: viewModel.note[index].width ?? 1,
+                                                  )).then((value) {
+                                                    Utils.showToast(context, "Image added to favorite");
+                                                  });
+                                                },
+                                                splashRadius: 25,
+                                              ),
+                                            )
+                                          ],
                                         ),
                                         Padding(
                                           padding: const EdgeInsets.only(left: 5, right: 5, top: 5),

@@ -85,7 +85,7 @@ class _$AppDatabase extends AppDatabase {
       },
       onCreate: (database, version) async {
         await database.execute(
-            'CREATE TABLE IF NOT EXISTS `ImagesListEntity` (`id` TEXT NOT NULL, `imageUrl` TEXT NOT NULL, `isSelected` INTEGER NOT NULL, PRIMARY KEY (`id`))');
+            'CREATE TABLE IF NOT EXISTS `ImagesListEntity` (`id` TEXT NOT NULL, `imageUrl` TEXT NOT NULL, `isSelected` INTEGER NOT NULL, `height` INTEGER NOT NULL, `width` INTEGER NOT NULL, PRIMARY KEY (`id`))');
 
         await callback?.onCreate?.call(database, version);
       },
@@ -110,7 +110,9 @@ class _$ImagesListDao extends ImagesListDao {
             (ImagesListEntity item) => <String, Object?>{
                   'id': item.id,
                   'imageUrl': item.imageUrl,
-                  'isSelected': item.isSelected ? 1 : 0
+                  'isSelected': item.isSelected ? 1 : 0,
+                  'height': item.height,
+                  'width': item.width
                 }),
         _imagesListEntityUpdateAdapter = UpdateAdapter(
             database,
@@ -119,7 +121,9 @@ class _$ImagesListDao extends ImagesListDao {
             (ImagesListEntity item) => <String, Object?>{
                   'id': item.id,
                   'imageUrl': item.imageUrl,
-                  'isSelected': item.isSelected ? 1 : 0
+                  'isSelected': item.isSelected ? 1 : 0,
+                  'height': item.height,
+                  'width': item.width
                 });
 
   final sqflite.DatabaseExecutor database;
@@ -138,7 +142,9 @@ class _$ImagesListDao extends ImagesListDao {
         mapper: (Map<String, Object?> row) => ImagesListEntity(
             id: row['id'] as String,
             imageUrl: row['imageUrl'] as String,
-            isSelected: (row['isSelected'] as int) != 0));
+            isSelected: (row['isSelected'] as int) != 0,
+            width: row['width'] as int,
+            height: row['height'] as int));
   }
 
   @override
