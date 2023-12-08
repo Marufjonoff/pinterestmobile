@@ -31,8 +31,7 @@ class SearchViewModel extends ChangeNotifier {
 
   Future<void> searchImage(BuildContext context) async {
     String searchData = textEditingController.text.trim().toString();
-    await Navigator.of(context)
-        .push(MaterialPageRoute(builder: (BuildContext context) {
+    await Navigator.of(context).push(MaterialPageRoute(builder: (BuildContext context) {
       return SearchPhoto(search: searchData);
     }));
   }

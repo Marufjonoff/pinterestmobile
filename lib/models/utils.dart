@@ -26,6 +26,7 @@ class Utils {
       SnackBar(
         content: Text(msg),
         action: SnackBarAction(label: 'Undo', onPressed: scaffold.hideCurrentSnackBar),
+        behavior: SnackBarBehavior.fixed,
       ),
     );
   }
