@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:pinterestmobile/core/app_colors.dart';
 import 'package:pinterestmobile/pages/auth/sign_in_page.dart';
+import 'package:pinterestmobile/pages/main/header_page.dart';
 import 'package:pinterestmobile/pages/views/validate_textField.dart';
 import 'package:pinterestmobile/widgets/glassmorphism_widget.dart';
 
@@ -184,6 +185,7 @@ class _SignUpPageState extends State<SignUpPage> with InputValidation {
                           ),
                         ),
                       ),
+
                       //
                       const SizedBox(
                         height: 12,
@@ -197,6 +199,8 @@ class _SignUpPageState extends State<SignUpPage> with InputValidation {
                           end: 0.0,
                           child: MaterialButton(
                             onPressed: (){
+                              Navigator.pushAndRemoveUntil(context, MaterialPageRoute(builder: (context) => const HeaderPage()), (route) => false);
+
                               if(isEmailValid(emailController.text.trim())
                                   && isPasswordValid(passwordController.text.trim())
                                   && isConfirmPasswordValid(confirmPasswordController.text.trim())) {

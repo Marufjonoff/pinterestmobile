@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:pinterestmobile/di.dart';
 import 'package:pinterestmobile/pages/main/account_page.dart';
 import 'package:pinterestmobile/pages/home/home_page.dart';
 import 'package:pinterestmobile/pages/main/header_page.dart';
@@ -8,7 +9,9 @@ import 'package:pinterestmobile/pages/splash/splash_page.dart';
 import 'pages/auth/sign_in_page.dart';
 import 'pages/auth/sign_up_page.dart';
 
-void main() {
+void main() async {
+  await setup();
+
   runApp(const MyApp());
 }
 

@@ -2,6 +2,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:pinterestmobile/core/app_colors.dart';
 import 'package:pinterestmobile/pages/auth/sign_up_page.dart';
+import 'package:pinterestmobile/pages/main/header_page.dart';
 import 'package:pinterestmobile/pages/views/validate_textField.dart';
 import 'package:pinterestmobile/widgets/glassmorphism_widget.dart';
 
@@ -151,6 +152,7 @@ class _SignInPageState extends State<SignInPage> with InputValidation {
                             end: 0.0,
                             child: MaterialButton(
                               onPressed: (){
+                                Navigator.pushAndRemoveUntil(context, MaterialPageRoute(builder: (context) => const HeaderPage()), (route) => false);
                                 if(isEmailValid(emailController.text.trim()) && isPasswordValid(passwordController.text.trim())) {
                                   _openHomePage();
                                 } else {
