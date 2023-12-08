@@ -156,11 +156,10 @@ class _SignInPageState extends State<SignInPage> with InputValidation {
                             end: 0.0,
                             child: MaterialButton(
                               onPressed: (){
-                                Navigator.pushAndRemoveUntil(context, MaterialPageRoute(builder: (context) => const HeaderPage()), (route) => false);
                                 if(isEmailValid(emailController.text.trim()) && isPasswordValid(passwordController.text.trim())) {
                                   _openHomePage();
                                 } else {
-                                  // Utils.showToast(context, "Email or password invalid");
+                                  Utils.showToast(context, "Email or password invalid");
                                 }
                               },
                               minWidth: MediaQuery.of(context).size.width,

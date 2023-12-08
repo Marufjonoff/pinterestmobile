@@ -12,7 +12,7 @@ class AuthService {
   // sign up user
   static Future<Map<String, User?>> signUpUser(Users usersModel) async {
     Map<String, User?> map = {};
-
+    debugPrint("${usersModel.email} ${usersModel.password}");
     try {
       UserCredential userCredential = await auth.createUserWithEmailAndPassword(email: usersModel.email!, password: usersModel.password!);
       User? user = userCredential.user;

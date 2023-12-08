@@ -1,36 +1,33 @@
-import 'dart:convert';
-
-Users usersFromJson(String str) => Users.fromJson(json.decode(str));
-
-String usersToJson(Users data) => json.encode(data.toJson());
-
 class Users {
-  late final String? uid;
-  final String? fullName;
-  final String? email;
-  final String? password;
-  final String? imageUrl;
+  String uid = "";
+  late String fullName;
+  late String email;
+  late String password;
+  String? imageUrl;
 
-  Users({
-    this.uid,
-    this.fullName,
-    this.email,
-    this.password,
-    this.imageUrl,
-  });
+  Users({required this.fullName, required this.email, required this.password});
 
-  factory Users.fromJson(Map<String, dynamic> json) => Users(
-    uid: json["uid"] ?? "",
-    fullName: json["fullName"],
-    email: json["email"],
-    password: json["password"],
-    imageUrl: json["imageUrl"] ?? "",
-  );
+  Users.fromJson(Map<String, dynamic> json) {
+    uid = json["uid"];
+    fullName = json["fullName"];
+    email = json["email"];
+    password = json["password"];
+    imageUrl = json["imageUrl"];
+  }
 
   Map<String, dynamic> toJson() => {
+    "uid": uid,
     "fullName": fullName,
     "email": email,
     "password": password,
     "imageUrl": imageUrl,
   };
+
+  @override
+  bool operator ==(Object other) {
+    return other is Users && other.uid == uid;
+  }
+
+  @override
+  int get hashCode => uid.hashCode;
 }
