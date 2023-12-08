@@ -5,7 +5,6 @@ import 'package:pinterestmobile/services/http_service.dart';
 class DetailViewModel extends ChangeNotifier {
   final ScrollController scrollController = ScrollController();
 
-  String name = "Obidjon Ma'rufjonoff";
   int seeMore = 3;
   List<Post> notes = [];
   bool isLoading = true;

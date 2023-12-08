@@ -2,6 +2,8 @@ import 'dart:async';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:pinterestmobile/pages/auth/sign_in_page.dart';
+import 'package:pinterestmobile/pages/main/header_page.dart';
+import 'package:pinterestmobile/services/pref_service.dart';
 
 class SplashPage extends StatefulWidget {
   const SplashPage({Key? key}) : super(key: key);
@@ -25,14 +27,13 @@ class _SplashPageState extends State<SplashPage> {
     return StreamBuilder<User?> (
       stream: FirebaseAuth.instance.authStateChanges(),
       builder: (context, snapshot) {
-        return  const SignInPage();
-        // if(snapshot.hasData) {
-        //   Prefs.store(StorageKeys.UID, snapshot.data!.uid);
-        //   return const HeaderPage();
-        // } else {
-        //   Prefs.remove(StorageKeys.UID);
-        //   return const SignInPage();
-        // }
+        if(snapshot.hasData) {
+          Prefs.store(StorageKeys.UID, snapshot.data!.uid);
+          return const HeaderPage();
+        } else {
+          Prefs.remove(StorageKeys.UID);
+          return const SignInPage();
+        }
       },
     );
   }
@@ -41,10 +42,7 @@ class _SplashPageState extends State<SplashPage> {
   void initState() {
     // TODO: implement initState
     super.initState();
-    // _openSignInPage();
-    Future.delayed(const Duration(seconds: 2)).then((value) {
-      Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => const SignInPage()));
-    });
+    _openSignInPage();
   }
 
   @override
