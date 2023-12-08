@@ -3,10 +3,9 @@ import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 import 'package:pinterestmobile/models/utils.dart';
+import 'package:pinterestmobile/pages/detail/detail_page.dart';
 import 'package:pinterestmobile/view_models/search_view_model.dart';
 import 'package:provider/provider.dart';
-
-import '../detail/detail_page.dart';
 
 class SearchPage extends StatefulWidget {
   const SearchPage({Key? key}) : super(key: key);
@@ -112,10 +111,10 @@ class _SearchPageState extends State<SearchPage> {
                   height: 15,
                 ),
                 GestureDetector(
-                  onTap: (){
+                  onTap: () {
                     Navigator.of(context).push(MaterialPageRoute(builder: (BuildContext context){
                       return DetailPage(indexImage: viewModel.spotLightRandom[viewModel.spotLightRandom.length - 1].urls!.small!);
-                    })
+                      })
                     );
                   },
                   child: Container(

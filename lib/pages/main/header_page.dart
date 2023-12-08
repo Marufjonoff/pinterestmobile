@@ -49,11 +49,11 @@ class _HeaderPageState extends State<HeaderPage> {
               unselectedItemColor: AppColors.black,
               items: [
                 BottomNavigationBarItem(
-                    icon: CustomPictures.icHome.copyWith(color: AppColors.black), label: "Bosh sahifa",
+                    icon: CustomPictures.icHome.copyWith(color: AppColors.black), label: "Dashboard",
                     activeIcon:  CustomPictures.icHome.copyWith(color: AppColors.primary)
                 ),
                 BottomNavigationBarItem(
-                    icon: CustomPictures.icSearch.copyWith(color: AppColors.black), label: "Qidiruv",
+                    icon: CustomPictures.icSearch.copyWith(color: AppColors.black), label: "Search",
                     activeIcon: CustomPictures.icSearch.copyWith(color: AppColors.primary)
                 ),
                 BottomNavigationBarItem(
@@ -61,7 +61,7 @@ class _HeaderPageState extends State<HeaderPage> {
                     activeIcon: CustomPictures.icChatSmile.copyWith(color: AppColors.primary)
                 ),
                 BottomNavigationBarItem(
-                    icon: CustomPictures.icProfile.copyWith(color: AppColors.black), label: "Profil",
+                    icon: CustomPictures.icProfile.copyWith(color: AppColors.black), label: "Profile",
                     activeIcon: CustomPictures.icProfile.copyWith(color: AppColors.primary)
                 ),
               ],

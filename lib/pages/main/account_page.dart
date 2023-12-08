@@ -2,6 +2,9 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:pinterestmobile/core/app_colors.dart';
+import 'package:pinterestmobile/dialogs/alert_dialogs.dart';
+import 'package:pinterestmobile/services/auth_service.dart';
 import 'package:pinterestmobile/view_models/account_view_model.dart';
 import 'package:provider/provider.dart';
 
@@ -33,18 +36,23 @@ class _AccountPageState extends State<AccountPage> {
           appBar: AppBar(
             backgroundColor: Colors.white,
             elevation: 0,
+            title: const Text("Profile", style: TextStyle(fontSize: 17, color: AppColors.black)),
             actions: [
               IconButton(
-                icon: const Icon(Icons.share, color: Colors.black,),
-                onPressed: (){},
+                onPressed: () {
+                  showAlertDialog(
+                      context,
+                      title: "Do you want to log out?",
+                      buttonConfirmTitle: "Logout",
+                      onConfirmPressed: () async {
+                        Navigator.pop(context);
+                        AuthService.signOutUser(context);
+                      }
+                  );
+                },
+                icon: const Icon(Icons.logout_outlined, color: AppColors.red),
               ),
-              Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 8),
-                child: IconButton(
-                  icon: const Icon(FontAwesomeIcons.ellipsisH, color: Colors.black, size: 18,),
-                  onPressed: (){},
-                ),
-              ),
+              const SizedBox(width: 30)
             ],
           ),
           body: viewModel.loading ? const Center(child: CircularProgressIndicator()) : SingleChildScrollView(
@@ -197,18 +205,18 @@ class _AccountPageState extends State<AccountPage> {
                                 height: 5,
                               ),
                               SizedBox(
+                                width: MediaQuery.of(context).size.width/2,
+                                height: 20,
                                 child: Padding(
                                   padding: const EdgeInsets.only(right: 10),
                                   child: Align(
+                                    alignment: Alignment.centerRight,
                                     child: GestureDetector(
                                       onTap: (){},
                                       child: const Icon(FontAwesomeIcons.ellipsisH, color: Colors.black, size: 17,),
                                     ),
-                                    alignment: Alignment.centerRight,
                                   ),
                                 ),
-                                width: MediaQuery.of(context).size.width/2,
-                                height: 20,
                               ),
                             ],
                           );

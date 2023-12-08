@@ -18,5 +18,4 @@ class AccountViewModel extends ChangeNotifier {
     loading = false;
     notifyListeners();
   }
-
 }

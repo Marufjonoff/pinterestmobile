@@ -14,7 +14,7 @@ class AuthService {
     Map<String, User?> map = {};
     debugPrint("${usersModel.email} ${usersModel.password}");
     try {
-      UserCredential userCredential = await auth.createUserWithEmailAndPassword(email: usersModel.email!, password: usersModel.password!);
+      UserCredential userCredential = await auth.createUserWithEmailAndPassword(email: usersModel.email, password: usersModel.password);
       User? user = userCredential.user;
       map = {"SUCCESS": user};
       return map;
